@@ -1,0 +1,51 @@
+package dev.chromium.client.module;
+
+import dev.chromium.client.util.Notifications;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class Module {
+    public enum Category {
+        PVP("PvP"), INFO("Info"), PERFORMANCE("Performance"), VISUAL("Visual"), UTILITY("Utility");
+        public final String label;
+        Category(String l) { label = l; }
+    }
+
+    public final String name, description;
+    public final Category category;
+    public boolean enabled;
+    public final boolean hasHud;
+    public boolean editable;           // draggable in the HUD editor
+    public int x, y, w = 60, h = 10;   // HUD position/size
+    public final int defX, defY;
+    public final List<Setting> settings = new ArrayList<>();
+
+    protected Module(String name, Category cat, String description, boolean hasHud, int x, int y) {
+        this.name = name; this.category = cat; this.description = description;
+        this.hasHud = hasHud; this.editable = hasHud;
+        this.x = defX = x; this.y = defY = y;
+    }
+
+    protected Setting add(Setting s) { settings.add(s); return s; }
+    protected Setting bool(String n, boolean d) { return add(Setting.bool(n, d)); }
+    protected Setting num(String n, double d, double min, double max, double step) { return add(Setting.num(n, d, min, max, step)); }
+    protected Setting color(String n, int d) { return add(Setting.color(n, d)); }
+    protected Setting mode(String n, int d, String... m) { return add(Setting.mode(n, d, m)); }
+    protected Module on() { enabled = true; return this; }
+    protected Module noEdit() { editable = false; return this; }
+
+    public void setEnabled(boolean v, boolean notify) {
+        if (v == enabled) return;
+        enabled = v;
+        try { if (v) onEnable(); else onDisable(); } catch (Throwable t) { t.printStackTrace(); }
+        if (notify) Notifications.push(name, v ? "Enabled" : "Disabled");
+    }
+    public void toggle() { setEnabled(!enabled, true); }
+
+    public void onEnable() {}
+    public void onDisable() {}
+    public void onTick(MinecraftClient mc) {}
+    public void onHud(DrawContext ctx, MinecraftClient mc) {}
+}

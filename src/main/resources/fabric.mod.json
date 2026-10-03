@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "chromiumclient",
+  "version": "${version}",
+  "name": "ChromiumClient",
+  "description": "PvP client: HUD modules, FPS optimizations, custom ClickGUI and HUD editor.",
+  "authors": ["You"],
+  "icon": "assets/chromiumclient/logo.png",
+  "environment": "client",
+  "entrypoints": { "client": ["dev.chromium.client.ChromiumClient"] },
+  "mixins": ["chromiumclient.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.18.0",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
