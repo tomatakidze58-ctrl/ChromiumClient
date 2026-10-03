@@ -28,10 +28,10 @@ public class ModuleManager {
         all.add(new MemoryUsage());     all.add(new Clock());           all.add(new BiomeDisplay());
         all.add(new PlayerCounter());   all.add(new ServerAddress());   all.add(new CustomHudEditor());
         // Performance
-        all.add(new EntityCulling());   all.add(new BlockEntityCulling()); all.add(new ParticleOptimization());
-        all.add(new DynamicFps());      all.add(new FastRendering());   all.add(new FastChunkLoading());
-        all.add(new AnimationOptimization()); all.add(new WeatherOptimization());
-        all.add(new FpsLimiter());      all.add(new PerformanceProfiler());
+all.add(new ParticleOptimization());
+all.add(new DynamicFps());
+all.add(new WeatherOptimization());
+all.add(new FpsLimiter());;
         // Visual
         all.add(new Fullbright());      all.add(new Zoom());            all.add(new WeatherChanger());
         all.add(new NoVignette());      all.add(new NoPumpkinOverlay()); all.add(new NoPortalOverlay());
